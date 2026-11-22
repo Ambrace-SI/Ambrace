@@ -102,10 +102,15 @@ export const BACKERS: readonly Backer[] = [
     logo: { src: "/partners/sie-iit-madras.png", width: 640, height: 201 },
   },
   {
-    name: "Aspire Leaders",
-    support: "Community Action Award",
+    name: "Aspire Institute",
+    support: "Community Action Award 2026",
     detail:
-      "Funding through the Aspire Community Action Award, for projects that make a difference on the ground.",
+      "Winner of the India Foundry Community Action Award 2026, from Aspire Institute and the Aspire Leaders India Foundation (ALIF).",
+    logo: {
+      src: "/partners/aspire-institute.png",
+      width: 560,
+      height: 190,
+    },
   },
   {
     name: "NVIDIA Inception",

@@ -53,7 +53,7 @@ export function Hero({
         </motion.p>
 
         {/* The line changes per visit; it fades across rather than jumping. */}
-        <h1 className="mt-6 grid text-[clamp(2.25rem,min(6vw,7.5vh),5rem)] leading-[1.04] font-medium tracking-[-0.045em] text-balance">
+        <h1 className="mt-6 grid text-[clamp(2.25rem,min(6vw,6.8vh),5rem)] leading-[1.04] font-medium tracking-[-0.045em] text-balance">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={headline}
@@ -91,7 +91,7 @@ export function Hero({
         </motion.div>
       </div>
 
-      <div className="relative mt-6 h-[320px] md:mt-3 md:h-auto md:min-h-[260px] md:flex-1">
+      <div className="relative mt-6 h-[320px] md:mt-3 md:h-auto md:min-h-[220px] md:flex-1">
         <HeroScene className="absolute inset-0 size-full" />
       </div>
 

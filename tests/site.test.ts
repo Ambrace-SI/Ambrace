@@ -64,7 +64,7 @@ describe("the facts on the page", () => {
     expect(BACKERS.map((b) => b.name)).toEqual([
       "IIT Madras",
       "SIE, IIT Madras",
-      "Aspire Leaders",
+      "Aspire Institute",
       "NVIDIA Inception",
     ]);
   });
