@@ -119,4 +119,12 @@ export const BACKERS: readonly Backer[] = [
       "A member of NVIDIA Inception, NVIDIA’s programme for start-ups building with AI.",
     logo: { src: "/partners/nvidia.svg", width: 656, height: 120 },
   },
+  {
+    name: "Sarvam",
+    support: "Startup Program",
+    detail:
+      "A member of the Sarvam Startup Program, from Sarvam AI, which builds AI for India.",
+    // Sarvam publishes its wordmark in black or white only.
+    logo: { src: "/partners/sarvam.svg", width: 202, height: 32 },
+  },
 ];

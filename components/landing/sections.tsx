@@ -21,26 +21,33 @@ const card = "rounded-3xl border bg-card";
 export function BackedByStrip() {
   return (
     <section aria-labelledby="backed-strip" className="bg-hill-front">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4 px-6 pt-2 pb-6">
+      <div className="mx-auto flex max-w-[90rem] flex-wrap items-start justify-center gap-x-12 gap-y-4 px-6 pt-1 pb-3">
         <h2
           id="backed-strip"
-          className="font-mono text-xs font-normal tracking-[0.14em] text-foreground/70 uppercase"
+          // Level with the logos, which all sit in a box of the same height.
+          className="flex h-9 items-center font-mono text-xs font-normal tracking-[0.14em] text-foreground/70 uppercase"
         >
           Backed by
         </h2>
         {BACKERS.map((backer) => (
-          <div key={backer.name} className="flex items-center gap-3">
-            <PartnerLogo
-              backer={backer}
-              // A long wordmark sits shorter than a square seal, so each
-              // logo carries about the same visual weight.
-              className={
-                backer.logo && backer.logo.width / backer.logo.height > 4
-                  ? "h-5 text-[17px]"
-                  : "h-9 text-[17px]"
-              }
-            />
-            <div className="flex flex-col leading-tight">
+          <div
+            key={backer.name}
+            className="flex flex-col items-center gap-1 text-center"
+          >
+            {/* Every logo sits in the same height box, so the labels line up. */}
+            <div className="flex h-9 items-center">
+              <PartnerLogo
+                backer={backer}
+                // A long wordmark sits shorter than a square seal, so each
+                // logo carries about the same visual weight.
+                className={
+                  backer.logo && backer.logo.width / backer.logo.height > 4
+                    ? "h-5 text-[17px]"
+                    : "h-9 text-[17px]"
+                }
+              />
+            </div>
+            <div className="flex flex-col items-center leading-tight">
               {backer.nameBesideLogo && (
                 <span className="text-[15px] font-semibold">{backer.name}</span>
               )}
@@ -350,7 +357,7 @@ export function BackedBy() {
         <SectionHeading index="07" label="Backed by" id="backers">
           In good company, early.
         </SectionHeading>
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {BACKERS.map((backer, i) => (
             <Reveal
               key={backer.name}

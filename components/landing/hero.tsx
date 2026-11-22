@@ -91,7 +91,7 @@ export function Hero({
         </motion.div>
       </div>
 
-      <div className="relative mt-6 h-[320px] md:mt-3 md:h-auto md:min-h-[220px] md:flex-1">
+      <div className="relative mt-6 h-[320px] md:mt-3 md:h-auto md:min-h-[200px] md:flex-1">
         <HeroScene className="absolute inset-0 size-full" />
       </div>
 
