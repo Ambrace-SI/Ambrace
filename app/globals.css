@@ -213,16 +213,20 @@
   animation: tether 2.4s linear infinite;
 }
 
-/* Partner logos are shown in one quiet tone, so no single brand shouts. */
+/*
+ * Partner logos keep their own colours. By day, multiply drops any white
+ * background a logo file carries. At night the colours would sink into the
+ * dark, so each logo sits on a small white tile, as partners' logos usually do.
+ */
 .partner-logo {
-  filter: grayscale(1) contrast(1.15);
   mix-blend-mode: multiply;
-  opacity: 0.85;
 }
 
 .dark .partner-logo {
-  filter: grayscale(1) invert(1) contrast(1.1);
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 3px 5px;
 }
 
 @media (prefers-reduced-motion: reduce) {

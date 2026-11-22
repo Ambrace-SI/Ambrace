@@ -13,23 +13,43 @@ import { BACKERS, CONTACT, FOUNDERS } from "@/lib/site";
 
 const card = "rounded-3xl border bg-card";
 
-/** Who backs us, in one line under the hero. */
+/**
+ * Who backs us, along the bottom of the first screen. It shares the front
+ * hill's colour and has no border, so the hill runs straight into it: the
+ * backers sit on the ground of the scene, not in a separate band.
+ */
 export function BackedByStrip() {
   return (
-    <section aria-labelledby="backed-strip" className="border-y">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-5 px-6 py-7">
+    <section aria-labelledby="backed-strip" className="bg-hill-front">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4 px-6 pt-2 pb-6">
         <h2
           id="backed-strip"
-          className="font-mono text-xs font-normal tracking-[0.14em] text-muted-foreground uppercase"
+          className="font-mono text-xs font-normal tracking-[0.14em] text-foreground/70 uppercase"
         >
           Backed by
         </h2>
         {BACKERS.map((backer) => (
           <div key={backer.name} className="flex items-center gap-3">
-            <PartnerLogo backer={backer} className="h-9 text-[17px]" />
-            <span className="text-sm text-muted-foreground">
-              {backer.support}
-            </span>
+            <PartnerLogo
+              backer={backer}
+              // A long wordmark sits shorter than a square seal, so each
+              // logo carries about the same visual weight.
+              className={
+                backer.logo && backer.logo.width / backer.logo.height > 4
+                  ? "h-5 text-[17px]"
+                  : "h-9 text-[17px]"
+              }
+            />
+            <div className="flex flex-col leading-tight">
+              {backer.nameBesideLogo && (
+                <span className="text-[15px] font-semibold">{backer.name}</span>
+              )}
+              {backer.support && (
+                <span className="text-sm text-foreground/75">
+                  {backer.support}
+                </span>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -330,7 +350,7 @@ export function BackedBy() {
         <SectionHeading index="07" label="Backed by" id="backers">
           In good company, early.
         </SectionHeading>
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {BACKERS.map((backer, i) => (
             <Reveal
               key={backer.name}
@@ -338,12 +358,17 @@ export function BackedBy() {
               className={`${card} flex flex-col gap-4 p-7`}
             >
               <div className="flex h-18 items-center">
-                <PartnerLogo backer={backer} className="max-h-16 text-2xl" />
+                <PartnerLogo
+                  backer={backer}
+                  className="max-h-16 max-w-full object-contain text-2xl"
+                />
               </div>
               <h3 className="text-xl font-medium">{backer.name}</h3>
-              <p className="font-mono text-xs tracking-[0.1em] text-muted-foreground uppercase">
-                {backer.support}
-              </p>
+              {backer.support && (
+                <p className="font-mono text-xs tracking-[0.1em] text-muted-foreground uppercase">
+                  {backer.support}
+                </p>
+              )}
               <p className="text-muted-foreground">{backer.detail}</p>
             </Reveal>
           ))}

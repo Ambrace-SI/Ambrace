@@ -97,7 +97,8 @@ export default function InvestorsPage() {
         <ul>
           {BACKERS.map((b) => (
             <li key={b.name}>
-              <strong>{b.name}</strong>: {b.support}
+              <strong>{b.name}</strong>
+              {b.support ? `: ${b.support}` : ""}
             </li>
           ))}
         </ul>

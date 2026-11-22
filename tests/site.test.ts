@@ -65,6 +65,7 @@ describe("the facts on the page", () => {
       "IIT Madras",
       "SIE, IIT Madras",
       "Aspire Leaders",
+      "NVIDIA Inception",
     ]);
   });
 

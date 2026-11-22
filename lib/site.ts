@@ -65,10 +65,19 @@ export const FOUNDERS: readonly Founder[] = [
 
 export type Backer = {
   name: string;
-  support: string;
+  /** A short line on how they back us; left out when the logo says enough. */
+  support?: string;
   detail: string;
   /** A logo file under /public/partners, or none: the name is set as type. */
-  logo?: { src: string; width: number; height: number };
+  logo?: {
+    src: string;
+    width: number;
+    height: number;
+    /** A self-contained seal that reads on both day and night as it is. */
+    standsAlone?: boolean;
+  };
+  /** The logo has no readable name in it, so the name is written beside it. */
+  nameBesideLogo?: boolean;
 };
 
 export const BACKERS: readonly Backer[] = [
@@ -77,13 +86,19 @@ export const BACKERS: readonly Backer[] = [
     support: "Pre-incubated",
     detail:
       "Ambrace is pre-incubated at the Indian Institute of Technology Madras.",
-    logo: { src: "/partners/iit-madras.svg", width: 500, height: 500 },
+    // The colour seal; the name is set beside it as text.
+    logo: {
+      src: "/partners/iit-madras.svg",
+      width: 300,
+      height: 300,
+      standsAlone: true,
+    },
+    nameBesideLogo: true,
   },
   {
     name: "SIE, IIT Madras",
-    support: "Pratham seed grant",
     detail:
-      "A seed grant from the School of Innovation & Entrepreneurship, IIT Madras, through its Pratham programme.",
+      "A seed grant from the School of Innovation & Entrepreneurship, IIT Madras.",
     logo: { src: "/partners/sie-iit-madras.png", width: 640, height: 201 },
   },
   {
@@ -91,5 +106,12 @@ export const BACKERS: readonly Backer[] = [
     support: "Community Action Award",
     detail:
       "Funding through the Aspire Community Action Award, for projects that make a difference on the ground.",
+  },
+  {
+    name: "NVIDIA Inception",
+    support: "Inception Program",
+    detail:
+      "A member of NVIDIA Inception, NVIDIA’s programme for start-ups building with AI.",
+    logo: { src: "/partners/nvidia.svg", width: 656, height: 120 },
   },
 ];

@@ -23,9 +23,9 @@ const NAV = [
 export default function HomePage() {
   return (
     <>
-      <Hero appUrl={appUrl()} links={NAV} />
+      {/* The backers sit along the bottom of the first screen. */}
+      <Hero appUrl={appUrl()} links={NAV} footer={<BackedByStrip />} />
       <main>
-        <BackedByStrip />
         <Why />
         <HowItWorks />
         <LearningProfile />

@@ -2,6 +2,7 @@
 
 import { ArrowRightIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import type { ReactNode } from "react";
 
 import { HeroScene } from "@/components/landing/hero-scene";
 import { NightSky } from "@/components/landing/night-sky";
@@ -17,24 +18,33 @@ const rise = (delay: number) => ({
 
 /**
  * The first screen: the badge, this visit's headline, the promise, one way in
- * (Try now), and the scene underneath, where the idea is shown rather than
- * told.
+ * (Try now), the scene, where the idea is shown rather than told, and the
+ * backers along the bottom (`footer`).
+ *
+ * On laptops and up it is exactly one screen tall: the words take what they
+ * need and the scene scales into the rest, so the student on the hill and the
+ * backers are always in view without scrolling. Phones scroll naturally.
  */
 export function Hero({
   appUrl,
   links,
+  footer,
 }: {
   appUrl: string;
   links: readonly NavLink[];
+  footer?: ReactNode;
 }) {
   const headline = useVisitHeadline();
 
   return (
-    <section id="top" className="relative overflow-hidden bg-sky">
+    <section
+      id="top"
+      className="relative flex flex-col overflow-hidden bg-sky md:min-h-svh"
+    >
       <NightSky count={140} seed={7} className="inset-0" />
       <SiteHeader links={links} />
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pt-12 text-center md:pt-16">
+      <div className="relative z-10 mx-auto flex max-w-5xl shrink-0 flex-col items-center px-6 pt-10 text-center md:pt-[clamp(1rem,4vh,3rem)]">
         <motion.p
           {...rise(0.05)}
           className="glass-badge rounded-full px-4 py-2 font-mono text-xs tracking-[0.16em] text-foreground/80 uppercase"
@@ -43,7 +53,7 @@ export function Hero({
         </motion.p>
 
         {/* The line changes per visit; it fades across rather than jumping. */}
-        <h1 className="mt-6 grid text-[clamp(2.5rem,6vw,5rem)] leading-[1.04] font-medium tracking-[-0.045em] text-balance">
+        <h1 className="mt-6 grid text-[clamp(2.25rem,min(6vw,7.5vh),5rem)] leading-[1.04] font-medium tracking-[-0.045em] text-balance">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={headline}
@@ -81,7 +91,11 @@ export function Hero({
         </motion.div>
       </div>
 
-      <HeroScene />
+      <div className="relative mt-6 h-[320px] md:mt-3 md:h-auto md:min-h-[260px] md:flex-1">
+        <HeroScene className="absolute inset-0 size-full" />
+      </div>
+
+      {footer && <div className="relative z-10 shrink-0">{footer}</div>}
     </section>
   );
 }

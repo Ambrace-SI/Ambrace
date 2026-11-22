@@ -31,7 +31,11 @@ export function PartnerLogo({
       width={backer.logo.width}
       height={backer.logo.height}
       alt={`${backer.name} logo`}
-      className={cn("partner-logo w-auto", className)}
+      className={cn(
+        "w-auto",
+        !backer.logo.standsAlone && "partner-logo",
+        className,
+      )}
     />
   );
 }
