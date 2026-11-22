@@ -53,6 +53,7 @@ describe("the landing page", () => {
     expect(
       screen.getAllByAltText("SIE, IIT Madras logo").length,
     ).toBeGreaterThan(0);
+    expect(screen.getAllByAltText("Sarvam logo").length).toBeGreaterThan(0);
   });
 
   test("leaves the harness and the model to the investors page", () => {
