@@ -1,0 +1,14 @@
+# Only generated or third-party output is listed here.
+.next/
+out/
+node_modules/
+package-lock.json
+next-env.d.ts
+AGENTS.md
+CLAUDE.md
+
+# Brand and partner files, used exactly as supplied
+public/brand/
+public/partners/
+public/favicon.svg
+public/site.webmanifest

@@ -1,0 +1,235 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sky: var(--sky);
+  --color-band: var(--band);
+  --color-card: var(--card);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ember: var(--ember);
+  --color-ember-foreground: var(--ember-foreground);
+  --color-ember-text: var(--ember-text);
+  --color-hill-back: var(--hill-back);
+  --color-hill-front: var(--hill-front);
+  --color-figure: var(--figure);
+  --color-graph: var(--graph);
+  --color-node: var(--node);
+}
+
+/*
+ * Ambrace brand tokens, the same palette as the app.
+ *
+ * Day is Paper with a Mist sky; night is Ink. Ember stands for the student:
+ * the warm point in the logo, their own star in the scene, and the one action
+ * on the page (Try now). Everything else is Ink on Paper or Mist on Ink.
+ *
+ * Flat colour throughout. The single exception is the thin line of light that
+ * travels around the "Learn differently" badge.
+ */
+:root {
+  --background: #f4f3ef; /* Paper */
+  --foreground: #0b0b10; /* Ink */
+  --sky: #ecebf2; /* Mist */
+  --band: #ecebf2;
+  --card: #f4f3ef;
+  --muted-foreground: #55536a;
+  --border: #cfcdd8; /* Orbit light */
+  --ring: #0b0b10;
+  --ember: #ff6b4a;
+  --ember-foreground: #0b0b10; /* never white on Ember: Ink is 6.9:1 */
+  --ember-text: #c43d1c; /* coral text on Paper must use this */
+
+  /* The hero scene */
+  --hill-back: #dddbe4;
+  --hill-front: #cfcdd8;
+  --figure: #55536a;
+  --graph: rgb(85 83 106 / 0.45);
+  --node: #55536a;
+
+  /* Glass over the Mist sky. White on Mist barely differs, so the edge is
+     Orbit light and the travelling light is Ember: white light on a light
+     sky would be invisible. */
+  --glass: rgb(255 255 255 / 0.6);
+  --glass-edge: #cfcdd8;
+  --glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9), 0 1px 2px rgb(11 11 16 / 0.06),
+    0 8px 24px rgb(11 11 16 / 0.06);
+  --glass-light: #ff6b4a;
+  --scrollbar: #cfcdd8;
+}
+
+.dark {
+  --background: #0b0b10;
+  --foreground: #ecebf2;
+  --sky: #0b0b10;
+  --band: #0b0b10;
+  --card: #1c1b25; /* Graphite */
+  --muted-foreground: #9a98ac;
+  --border: #3a3946; /* Orbit dark */
+  --ring: #ecebf2;
+  --ember-text: #ff6b4a;
+
+  --hill-back: #15141c;
+  --hill-front: #1c1b25;
+  --figure: #3a3946;
+  --graph: rgb(236 235 242 / 0.35);
+  --node: #ecebf2;
+
+  --glass: rgb(28 27 37 / 0.45);
+  --glass-edge: rgb(236 235 242 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(236 235 242 / 0.08);
+  --glass-light: rgb(255 140 110 / 0.95); /* a warm, Ember-tinted glint */
+  --scrollbar: #3a3946;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * The "Learn differently" badge: frosted glass with a line of light that
+ * travels slowly round its edge. The light is a conic sweep drawn only in the
+ * 1px border ring (the mask cuts the middle out), turning on a registered
+ * angle so the browser can animate it.
+ * ------------------------------------------------------------------------- */
+@property --sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.glass-badge {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.glass-badge::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--sweep),
+    transparent 0deg 300deg,
+    var(--glass-light) 340deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: sweep 4.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes sweep {
+  to {
+    --sweep: 360deg;
+  }
+}
+
+/* Stars twinkle at their own pace; each sets its own delay. */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: var(--star-alpha, 0.8);
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.star {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* The student's star and the logo's point breathe the same breath. */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.22);
+  }
+}
+
+.breathe {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 4s 2.5s ease-in-out infinite;
+}
+
+/* The dotted line from the student up to their star, always flowing upward. */
+@keyframes tether {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.tether {
+  stroke-dasharray: 3 5;
+  animation: tether 2.4s linear infinite;
+}
+
+/* Partner logos are shown in one quiet tone, so no single brand shouts. */
+.partner-logo {
+  filter: grayscale(1) contrast(1.15);
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+
+.dark .partner-logo {
+  filter: grayscale(1) invert(1) contrast(1.1);
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-badge::before,
+  .star,
+  .breathe,
+  .tether {
+    animation: none;
+  }
+}
